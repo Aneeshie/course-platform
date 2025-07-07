@@ -12,7 +12,7 @@ const Page = async () => {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow container mx-auto px-4 py-16">
-        <div className="text-center mb-16">
+        <div className="text-center mb-13">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">
             Forge your path in Modern Development
           </h1>
