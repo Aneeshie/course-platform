@@ -1,23 +1,34 @@
-
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../convex/_generated/api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight } from "lucide-react";
+import PurchaseButton from "@/components/PurchaseButton";
 
-const Page = async () => {
+export default async function Home() {
   const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
   const courses = await convex.query(api.courses.getCourses);
 
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow container mx-auto px-4 py-16">
-        <div className="text-center mb-13">
+        <div className="text-center mb-16">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">
-            Forge your path in Modern Development
+            Forge Your Path in Modern Development
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            lorem ipsum
+            Master fullstack skills through engaging, project-based learning.
+            Unlock your potential with MasterClass.
           </p>
         </div>
 
@@ -41,13 +52,37 @@ const Page = async () => {
                 </CardContent>
               </Link>
 
+              <CardFooter className="flex justify-between items-center">
+                <Badge variant="default" className="text-lg px-3 py-1">
+                  ${course.price.toFixed(2)}
+                </Badge>
+
+                <SignedIn>
+                  <PurchaseButton courseId={course._id} />
+                </SignedIn>
+
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <Button variant={"outline"}>Enroll Now</Button>
+                  </SignInButton>
+                </SignedOut>
+              </CardFooter>
             </Card>
           ))}
+        </div>
+
+        <div className="text-center">
+          <Link href="/pro">
+            <Button
+              size="lg"
+              className="group hover:bg-purple-600 transition-colors duration-300"
+            >
+              Explore Pro Plans
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </div>
       </main>
     </div>
   );
-};
-
-export default Page;
-
+}
