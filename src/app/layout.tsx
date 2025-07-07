@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ConvexClerkProvider from "./providers/ConvexProviderWithClerk";
-import Navbar from "../components/Navbar"
+import Navbar from "../components/Navbar";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
           <div className="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
           <Navbar />
           <ConvexClerkProvider>{children}</ConvexClerkProvider>
+          <Toaster />
         </ClerkProvider>
       </body>
     </html>
