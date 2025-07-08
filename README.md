@@ -32,7 +32,7 @@ A modern course platform built with **Next.js App Router**, **Convex backend**, 
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/yourusername/course-platform.git
+git clone https://github.com/Aneeshie/course-platform.git
 cd course-platform
 ```
 ### 2. Install Dependencies
