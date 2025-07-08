@@ -1,11 +1,12 @@
 // app/(course)/[courseId]/page.tsx
 import { Id } from "../../../../convex/_generated/dataModel";
-import CourseDetailPage from "./CourseDetailClient"; // rename your component
+import CourseDetailPage from "./CourseDetailClient";
 
-export default function CoursePage({
+export default async function CoursePage({
   params,
 }: {
-  params: { courseId: Id<"courses"> };
+  params: Promise<{ courseId: Id<"courses"> }>;
 }) {
-  return <CourseDetailPage courseId={params.courseId} />;
+  const { courseId } = await params;
+  return <CourseDetailPage courseId={courseId} />;
 }
