@@ -29,7 +29,7 @@ const PurchaseButton = ({ courseId }: { courseId: Id<"courses"> }) => {
 
   const handlePurchase = async () => {
     // TODO
-    if (!user) alert("please login");
+    if (!user) toast.error("please login");
     setIsLoading(true);
     try {
       const { checkoutUrl } = await createCheckoutSession({ courseId });
