@@ -3,15 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
-const page = ({
+export default async function SuccessPage({
   params,
   searchParams,
 }: {
-  params: { courseId: string };
-  searchParams: { session_id: string };
-}) => {
-  const { courseId } = params;
-  const { session_id } = searchParams;
+  params: Promise<{ courseId: string }>;
+  searchParams: Promise<{ session_id?: string }>;
+}) {
+  const { courseId } = await params;
+  const { session_id } = await searchParams;
 
   return (
     <div className="container mx-auto py-12 px-4">
@@ -22,14 +22,14 @@ const page = ({
             Purchase Successful!
           </CardTitle>
         </CardHeader>
-        <CardContent className="text-center space-y-6 ">
+        <CardContent className="text-center space-y-6">
           <p className="text-xl text-gray-700">
-            Thank you enrolling to my non-existent course!
+            Thank you for enrolling in my non-existent course!
           </p>
 
           <div className="bg-gray-200 py-4 rounded">
             <p className="text-sm text-gray-500">
-              transaction Id: {session_id}
+              Transaction ID: {session_id || "N/A"}
             </p>
           </div>
           <div className="flex justify-center gap-4">
@@ -38,8 +38,8 @@ const page = ({
                 Go To Course
               </Button>
             </Link>
-            <Link href={"/courses"}>
-              <Button variant={"outline"} className="w-full sm:w-auto">
+            <Link href="/courses">
+              <Button variant="outline" className="w-full sm:w-auto">
                 Browse for more courses!
               </Button>
             </Link>
@@ -48,6 +48,4 @@ const page = ({
       </Card>
     </div>
   );
-};
-
-export default page;
+}
