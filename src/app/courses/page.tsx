@@ -64,7 +64,7 @@ const page = async () => {
                 <SignInButton mode="modal">
                   <Button
                     variant="outline"
-                    className="border-purple-500 text-purple-200 hover:bg-purple-700/20 hover:text-white"
+                    className="border-purple-500 text-purple-300 hover:bg-purple-700/20 hover:text-white bg-gray-950"
                   >
                     Enroll Now
                   </Button>
