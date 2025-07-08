@@ -4,7 +4,7 @@ import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../../../../convex/_generated/api";
 import { Id } from "../../../../../convex/_generated/dataModel";
 import resend from "@/lib/resend";
-import PurchaseConfirmationEmail from "@/emails/PurchaseConfirmationEmail";
+import PurchaseConfirmationEmail from "@/emails/PurchaseConfirmation";
 import ProPlanActivatedEmail from "@/emails/ProPlanActivatedEmail";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
@@ -77,7 +77,7 @@ async function handleCheckoutSessionCompleted(
     throw new Error("User not found");
   }
 
-  await convex.mutation(api.purchases.recordPurchase, {
+  await convex.mutation(api.purchases.createPurchase, {
     userId: user._id,
     courseId: courseId as Id<"courses">,
     amount: session.amount_total as number,
@@ -91,7 +91,7 @@ async function handleCheckoutSessionCompleted(
     process.env.NODE_ENV === "development"
   ) {
     await resend.emails.send({
-      from: "MasterClass <onboarding@resend.dev>",
+      from: "Edvora <onboarding@resend.dev>",
       to: user.email,
       subject: "Purchase Confirmed",
       react: PurchaseConfirmationEmail({
