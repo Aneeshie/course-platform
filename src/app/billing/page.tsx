@@ -17,7 +17,6 @@ import {
   CheckCircle,
   CreditCard,
   Loader,
-  SquaresSubtract,
   Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -55,16 +54,14 @@ const BillingPage = () => {
       setIsLoading(false);
     }
   };
+
   const formatDate = (timestamp: number): string => {
     const date = new Date(timestamp * 1000);
-
-    const options: Intl.DateTimeFormatOptions = {
+    return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
-    };
-
-    return date.toLocaleDateString("en-US", options);
+    });
   };
 
   if (!userData || subscription === undefined) {
@@ -76,58 +73,62 @@ const BillingPage = () => {
   }
 
   return (
-    <div className="container mx-auto py-12 px-4 max-w-4xl h-screen">
-      <h1 className="text-4xl font-bold mb-8 text-center text-gray-700">
+    <div className="container mx-auto py-12 px-4 max-w-4xl text-white h-screen">
+      <h1 className="text-4xl font-bold mb-8 text-center">
         Billing Management
       </h1>
-      <Card className="w-full shadow-lg border-0 overflow-hidden">
+
+      <Card className="w-full shadow-lg border border-purple-800 bg-[#1a1a2e]">
         {subscription ? (
           <>
             <CardHeader className="pb-0">
-              <CardTitle className="text-2xl text-gray-800 flex items-center gap-2">
-                <CheckCircle className="size-6 text-green-500" />
+              <CardTitle className="text-2xl flex items-center gap-2 text-green-400">
+                <CheckCircle className="size-6" />
                 Active Subscription
               </CardTitle>
-              <CardDescription className="text-gray-600">
+              <CardDescription className="text-purple-300">
                 Manage your subscription details below
               </CardDescription>
             </CardHeader>
 
             <CardContent className="space-y-6 pt-5">
-              <div className="gid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg">
+              <div className="grid grid-cols-2 gap-4 bg-purple-900/20 p-4 rounded-lg">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">Plan</p>
-                  <p className="text-lg font-semibold text-gray-800 capitalize">
+                  <p className="text-sm font-medium text-purple-300">Plan</p>
+                  <p className="text-lg font-semibold capitalize">
                     {subscription.planType}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-sm font-medium text-gray-500 ">Status</p>
-                  <p className="text-lg font-semibold text-gray-800 capitalize">
+                  <p className="text-sm font-medium text-purple-300">Status</p>
+                  <p className="text-lg font-semibold capitalize">
                     {subscription.status}
                   </p>
                 </div>
+
                 <div className="col-span-2">
-                  <p className="text-sm font-medium text-gray-500">
+                  <p className="text-sm font-medium text-purple-300">
                     Next Billing Date
                   </p>
-                  <p className="text-lg font-semibold text-gray-800">
+                  <p className="text-lg font-semibold">
                     {formatDate(subscription.currentPeriodEnd)}
                   </p>
                 </div>
               </div>
+
               {subscription.cancelAtPeriodEnd && (
-                <div className="flex items-center bg-yellow-50 p-4 rounded-lg text-yellow-700">
-                  <AlertTriangle className="size-5 mr-3 flex-shrink-0" />
+                <div className="flex items-center bg-yellow-900/30 p-4 rounded-lg text-yellow-300">
+                  <AlertTriangle className="size-5 mr-3" />
                   <p className="text-sm">
-                    Your Subscription Will Be Cancelled At The End Of The
-                    Current billing Period.
+                    Your subscription will be cancelled at the end of the
+                    current billing period.
                   </p>
                 </div>
               )}
             </CardContent>
-            <CardFooter className="flex justify-end bg-gray-50 mt-6">
+
+            <CardFooter className="flex justify-end mt-6 bg-purple-900/10">
               <Button
                 onClick={handleManageBilling}
                 disabled={isLoading}
@@ -136,7 +137,7 @@ const BillingPage = () => {
                 {isLoading ? (
                   <>
                     <Loader className="mr-2 size-4 animate-spin" />
-                    Loading....
+                    Loading...
                   </>
                 ) : (
                   "Manage Billing"
@@ -146,18 +147,19 @@ const BillingPage = () => {
           </>
         ) : (
           <>
-            <div className="bg-gradient-to-r from-gray-200 to-gray-300 h-2 w-full"></div>
+            <div className="h-1 w-full bg-gradient-to-r from-purple-700 via-purple-500 to-purple-400" />
             <CardHeader>
-              <CardTitle className="text-2xl text-gray-800 flex items-center gap-2">
-                <CreditCard className="h-6 w-6 text-gray-600" />
+              <CardTitle className="text-2xl flex items-center gap-2 text-white">
+                <CreditCard className="h-6 w-6 text-purple-300" />
                 No Active Subscription
               </CardTitle>
-              <CardDescription className="text-gray-600">
+              <CardDescription className="text-purple-400">
                 Upgrade to Pro to unlock premium features
               </CardDescription>
             </CardHeader>
+
             <CardContent className="text-center py-12">
-              <p className="text-lg mb-6 text-gray-700">
+              <p className="text-lg mb-6 text-purple-200">
                 Get access to exclusive content and features with our Pro plan.
               </p>
               <Link href="/pro">

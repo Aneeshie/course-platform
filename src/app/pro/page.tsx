@@ -25,6 +25,7 @@ const ProPage = () => {
     api.users.getUserByClerkId,
     user ? { clerkId: user?.id } : "skip",
   );
+
   const userSubscription = useQuery(
     api.subscription.getUserSubscription,
     userData ? { userId: userData?._id } : "skip",
@@ -33,17 +34,14 @@ const ProPage = () => {
   const isYearlySubscriptionActive =
     userSubscription?.status === "active" &&
     userSubscription.planType === "year";
+
   const createProPlanCheckoutSession = useAction(
     api.stripe.createProPlanCheckoutSession,
   );
 
   const handlePlanSelection = async (planId: "month" | "year") => {
     if (!user) {
-      toast.error("Please log in to select a plan.", {
-        id: "login-error",
-        position: "top-center",
-        duration: 3000,
-      });
+      toast.error("Please log in to select a plan.");
       return;
     }
 
@@ -55,32 +53,32 @@ const ProPage = () => {
       }
     } catch (error: any) {
       if (error.message.includes("Rate limit exceeded")) {
-        toast.error("You've tried too many times. Please try again later.");
+        toast.error("Too many attempts. Try again later.");
       } else {
-        toast.error(
-          "There was an error initiating your purchase. Please try again.",
-        );
+        toast.error("Error starting purchase. Try again.");
       }
-      console.log(error);
+      console.error(error);
     } finally {
       setLoadingPlan("");
     }
   };
 
   return (
-    <div className="container mx-auto px-4 py-16 max-w-6xl h-screen">
-      <h1 className="text-4xl font-bold text-center mb-4 text-gray-800">
+    <div className="container mx-auto px-4 py-16 max-w-6xl text-white">
+      <h1 className="text-4xl font-bold text-center mb-4">
         Choose Your Pro Journey
       </h1>
-      <p className="text-xl text-center mb-12 text-gray-600">
+      <p className="text-xl text-center mb-12 text-purple-200">
         Unlock premium features and accelerate your learning
       </p>
 
       {isUserLoaded && userSubscription?.status === "active" && (
-        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-md">
-          <p className="text-blue-700">
+        <div className="bg-purple-900/40 border-l-4 border-purple-500 p-4 mb-8 rounded-md">
+          <p className="text-purple-200">
             You have an active{" "}
-            <span className="font-semibold">{userSubscription.planType}</span>{" "}
+            <span className="font-semibold text-white">
+              {userSubscription.planType}
+            </span>{" "}
             subscription.
           </p>
         </div>
@@ -90,26 +88,26 @@ const ProPage = () => {
         {PRO_PLANS.map((plan) => (
           <Card
             key={plan.id}
-            className={`
-               flex flex-col transition-all duration-300 ${
-                 plan.highlighted
-                   ? "border-purple-400 shadow-lg hover:shadow-xl"
-                   : "hover:border-purple-200 hover:shadow-md"
-               }
-          `}
+            className={`flex flex-col transition-all duration-300 bg-[#1a1a2e] border ${
+              plan.highlighted
+                ? "border-purple-500 shadow-lg hover:shadow-purple-700/30"
+                : "border-purple-800 hover:border-purple-600 hover:shadow-md"
+            }`}
           >
             <CardHeader className="flex-grow">
               <CardTitle
-                className={`text-2xl ${plan.highlighted ? "text-purple-600" : "text-gray-800"}`}
+                className={`text-2xl ${
+                  plan.highlighted ? "text-purple-400" : "text-purple-300"
+                }`}
               >
                 {plan.title}
               </CardTitle>
 
               <CardDescription className="mt-2">
-                <span className="text-3xl font-bold text-gray-900">
+                <span className="text-3xl font-bold text-white">
                   {plan.price}
                 </span>
-                <span className="text-gray-600 ml-1">{plan.period}</span>
+                <span className="text-purple-400 ml-1">{plan.period}</span>
               </CardDescription>
             </CardHeader>
 
@@ -118,9 +116,11 @@ const ProPage = () => {
                 {plan.features.map((feature, fIdx) => (
                   <li key={fIdx} className="flex items-center">
                     <Check
-                      className={`h-5 w-5 ${plan.highlighted ? "text-purple-500" : "text-green-500"} mr-2 flex-shrink-0`}
+                      className={`h-5 w-5 ${
+                        plan.highlighted ? "text-purple-400" : "text-green-400"
+                      } mr-2`}
                     />
-                    <span className="text-gray-700">{feature}</span>
+                    <span className="text-purple-200">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -131,7 +131,7 @@ const ProPage = () => {
                 className={`w-full py-6 text-lg ${
                   plan.highlighted
                     ? "bg-purple-600 hover:bg-purple-700 text-white"
-                    : "bg-white text-purple-600 border-2 border-purple-600 hover:bg-purple-50"
+                    : "bg-transparent border border-purple-500 text-purple-300 hover:bg-purple-700/10"
                 }`}
                 onClick={() => handlePlanSelection(plan.id as "month" | "year")}
                 disabled={

@@ -44,43 +44,52 @@ export default function CourseDetailPage({
   if (courseData === null) return notFound();
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <Card className="max-w-4xl mx-auto">
-        <CardHeader>
-          <Image
-            src={courseData.imageUrl}
-            alt={courseData.title}
-            width={1200}
-            height={600}
-            className="rounded-md object-cover w-full"
-          />
+    <div className="container mx-auto py-8 px-4 text-white">
+      <Card className="max-w-4xl mx-auto bg-[#1a1a2e] border border-purple-800 shadow-md">
+        <CardHeader className="p-0">
+          <div className="relative w-full h-64 md:h-96">
+            <Image
+              src={courseData.imageUrl}
+              alt={courseData.title}
+              fill
+              className="rounded-t-md object-cover"
+              sizes="(max-width: 768px) 100vw, 768px"
+            />
+          </div>
         </CardHeader>
         <CardContent>
-          <CardTitle className="text-3xl mb-4">{courseData.title}</CardTitle>
+          <CardTitle className="text-3xl mb-4 text-white">
+            {courseData.title}
+          </CardTitle>
+
           {userAccess.hasAccess ? (
             <>
-              <p className="text-gray-600 mb-6">{courseData.description}</p>
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-8">
-                <Button className="flex items-center justify-center space-x-2">
+              <p className="text-purple-200 mb-6">{courseData.description}</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <Button className="flex items-center justify-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white">
                   <PlayCircle className="size-5" />
                   <span>Start the Course</span>
                 </Button>
                 <Button
                   variant="outline"
-                  className="flex items-center justify-center space-x-2"
+                  className="flex items-center justify-center space-x-2 border-purple-500 text-purple-500 hover:bg-purple-700/20 hover:text-white"
                 >
                   <Download className="size-5" />
                   <span>Download Materials</span>
                 </Button>
               </div>
-              <h3 className="text-xl font-semibold mb-4">Course Modules</h3>
-              <ul className="space-y-2">
+
+              <h3 className="text-xl font-semibold mb-4 text-white">
+                Course Modules
+              </h3>
+              <ul className="space-y-2 text-purple-200">
                 <li className="flex items-center space-x-3">
-                  <FileText className="size-5 text-gray-400" />
+                  <FileText className="size-5 text-purple-400" />
                   <span>Introduction to the course</span>
                 </li>
                 <li className="flex items-center space-x-3">
-                  <FileText className="size-5 text-gray-400" />
+                  <FileText className="size-5 text-purple-400" />
                   <span>Hooks and custom hooks</span>
                 </li>
               </ul>
@@ -88,14 +97,14 @@ export default function CourseDetailPage({
           ) : (
             <div className="text-center">
               <div className="flex flex-col items-center space-y-2">
-                <Lock className="size-16 text-gray-500" />
-                <p className="text-lg text-gray-600">
-                  This Course Is Not Available To You
+                <Lock className="size-16 text-purple-500" />
+                <p className="text-lg text-purple-200">
+                  This course is not available to you
                 </p>
-                <p className="text-gray-500 mb-4">
+                <p className="text-purple-400 mb-4">
                   Enroll in this course to access all the content!
                 </p>
-                <p className="text-2xl font-bold mb-4">
+                <p className="text-2xl font-bold mb-4 text-white">
                   ${courseData.price.toFixed(2)}
                 </p>
                 <PurchaseButton courseId={courseId} />
@@ -111,15 +120,15 @@ export default function CourseDetailPage({
 function CourseDetailSkeleton() {
   return (
     <div className="container mx-auto py-8 px-4">
-      <Card className="max-w-4xl mx-auto">
-        <CardHeader>
-          <Skeleton className="w-full h-[600px] rounded-md" />
+      <Card className="max-w-4xl mx-auto bg-[#1a1a2e] border border-purple-800">
+        <CardHeader className="p-0">
+          <Skeleton className="w-full h-64 md:h-96 rounded-t-md" />
         </CardHeader>
         <CardContent>
-          <Skeleton className="h-10 w-0.75 mb-4" />
+          <Skeleton className="h-10 w-3/4 mb-4" />
           <Skeleton className="h-4 w-full mb-2" />
           <Skeleton className="h-4 w-full mb-2" />
-          <Skeleton className="h-4 w-0.66 mb-6" />
+          <Skeleton className="h-4 w-2/3 mb-6" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             <Skeleton className="h-10 w-full" />
             <Skeleton className="h-10 w-full" />
