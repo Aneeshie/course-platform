@@ -43,21 +43,21 @@ bun install
 ### 3. Create .env.local
 ```env
   # Clerk
-  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-  CLERK_SECRET_KEY=your_clerk_secret_key
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=****
+  CLERK_SECRET_KEY=****
   
   # Convex
-  NEXT_PUBLIC_CONVEX_URL=your_convex_url
-  CONVEX_DEPLOY_KEY=your_convex_deploy_key
+  NEXT_PUBLIC_CONVEX_URL=****
+  CONVEX_DEPLOY_KEY=****
   
   # Stripe
-  STRIPE_SECRET_KEY=your_stripe_secret_key
-  STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
-  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+  STRIPE_SECRET_KEY=****
+  STRIPE_WEBHOOK_SECRET=****
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=****
   
   # Resend
-  RESEND_API_KEY=your_resend_api_key
-  EMAIL_FROM_ADDRESS=you@yourdomain.com
+  RESEND_API_KEY=****
+  EMAIL_FROM_ADDRESS=****
 ```
 
 ### 4. Start the app
